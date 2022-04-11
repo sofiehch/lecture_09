@@ -22,9 +22,50 @@ def read_data(file_name, field):
         return None
 
 
+def linear_search(sekvence, hledane_cislo):
+    indices = []
+    idx = 0
+    count = 0
+    while idx < len(sekvence):
+        if sekvence[idx] == hledane_cislo:
+            indices.append(idx)
+            count = count + 1
+            idx = idx + 1
+        else:
+            idx = idx + 1
+    return {
+        "positions": indices,
+        "count": count,
+    }
+
+
+def pattern_search(dna_seq, pattern):
+    idx = 0
+    pozice = []
+    while idx < (len(dna_seq) - len(pattern)):
+        podminky = []
+        for prvek in pattern:
+            if prvek == dna_seq[idx]:
+                podminky.append(True)
+            idx = idx + 1
+        idx = idx + 1 - len(pattern)
+        if len(podminky) == len(pattern):
+            pozice.append(idx)
+    mnozina_pozic = set(pozice)
+    return mnozina_pozic
+
+
+
+
+
+
 def main():
     sequential_data = read_data("sequential.json", "unordered_numbers")
     print(sequential_data)
+    hledani_cisla = linear_search(sequential_data, 9)
+    print(hledani_cisla)
+    dna_seq = read_data("sequential.json", "dna_sequence")
+    print(pattern_search(dna_seq, "TA"))
     pass
 
 
